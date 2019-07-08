@@ -1,0 +1,23 @@
+{
+  "name": "socketio",
+  "version": "1.0.0",
+  "description": "socket chat app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pukovnikkostadinovic/socketIO.git"
+  },
+  "author": "pukovnik",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pukovnikkostadinovic/socketIO/issues"
+  },
+  "homepage": "https://github.com/pukovnikkostadinovic/socketIO#readme",
+  "dependencies": {
+    "express": "^4.15.2",
+    "socket.io": "^2.2.0"
+  }
+}
