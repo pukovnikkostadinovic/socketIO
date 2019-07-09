@@ -1,16 +1,34 @@
-var app = require('express')();
-var http = require('http').createServer(app);
-var io = require('socket.io')(http);
+var express = require('express');
+var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
 
-app.get('/', function(req, res){
-  	res.sendFile(__dirname + '/index.html');
+var light = {state: false};
+
+app.use(express.static(__dirname + '/node_modules'));
+app.get('/', function (req, res, next) {
+  res.sendFile(__dirname + '/index.html');
 });
 
-io.on('connection', (socket)=>{
-	socket.on('chat message', (msg)=>{
-		io.emit('chat message', msg);
-	});
+io.on('connection', function (client) {
+  console.log('Client connected...');
+
+  client.on('join', function (data) {
+    console.log(data);
+  });
+
+  io.sockets.emit('led', light);
+  client.on('toggle', function(state) {
+    light.state = !light.state;
+    console.log('id: ' + client.id + 'light: ' + light.state);
+    io.sockets.emit('led', light);
+  });
+
+  client.on('disconnect', function () {
+    console.log('Client disconnected!');
+  });
 });
-http.listen(8000,()=>{
-	console.log('listening on *:8000');
+
+server.listen(3000, () => {
+  console.log('Server is up and running on port 3000')
 });
